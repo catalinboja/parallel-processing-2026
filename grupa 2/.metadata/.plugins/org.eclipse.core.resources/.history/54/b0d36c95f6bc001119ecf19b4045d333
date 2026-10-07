@@ -1,0 +1,36 @@
+package ro.ase.ie.paralel.laborator;
+
+import java.util.Random;
+
+public class CardThread extends Thread{
+	
+	String name;
+	ContBancar cont;
+
+	public CardThread(String name, ContBancar cont) {
+		super();
+		this.name = name;
+		this.cont = cont;
+	}
+
+	@Override
+	public void run() {
+		while(true) {
+			Random random = new Random();
+			int valoare = random.nextInt(10);
+			try {
+				sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(this.name + " incearca plata de " + valoare);
+			this.cont.extrage(valoare);
+			
+			if(this.cont.getSold() <= 0) {
+				break;
+			}
+		}
+	}
+
+}
